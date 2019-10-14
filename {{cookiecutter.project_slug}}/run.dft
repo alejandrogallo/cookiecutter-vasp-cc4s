@@ -1,0 +1,10 @@
+# vim:ft=sh
+source run.conf
+set -eux
+# name of the calculation
+name=${0#.*run.}
+
+./setup-shin-files ${name}
+
+$GVASP | tee log.${name}
+cp OUTCAR{,.${name}}

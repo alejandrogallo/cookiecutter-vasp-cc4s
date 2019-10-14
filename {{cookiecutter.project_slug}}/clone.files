@@ -1,0 +1,14 @@
+# vim:ft=sh
+# Comment out lines that you don't want
+
+*shin
+run*
+clone.files
+clone
+*.cc4s
+
+#input.eom
+#POTCAR*
+#KPOINTS
+#PO*
+#submit*

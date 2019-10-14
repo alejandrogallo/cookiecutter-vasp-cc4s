@@ -1,0 +1,13 @@
+# vim:ft=sh
+source run.conf
+set -eux
+
+name=${0#.*run.}
+
+mkdir -p ${cc4sfolder}
+
+# copy all cc4s input files into cc4sfolder
+cp -v input.cc4s ${cc4sfolder}/
+
+# run cc4s calculation in cc4sfolder
+cd ${cc4sfolder} && ${CC4S} -file input.cc4s

@@ -1,0 +1,13 @@
+#SBATCH -J MgO-eom-rpa-700
+#SBATCH -N 3
+#SBATCH --partition=mem_0768
+#SBATCH --qos=mem_0768
+#SBATCH --ntasks-per-core=1
+#SBATCH --ntasks-per-node=48
+#SBATCH --mail-type=BEGIN,END
+#SBATCH --mail-user=aamsgallo@gmail.com
+
+set -eux
+
+./run.dft
+./run.cc4s

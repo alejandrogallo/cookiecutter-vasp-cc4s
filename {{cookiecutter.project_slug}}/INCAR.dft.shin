@@ -1,0 +1,28 @@
+# vim:ft=incar
+
+set -eu
+source run.conf
+
+cat <<EOF
+
+! used PRECFOCK = Normal for high quality calculations
+PREC     = Normal
+EDIFF    = 1E-6
+LREAL    = Auto
+
+  ! comment-out to calculate hartree fok
+!LHFCALC  = .TRUE.
+!AEXX     = 1.0
+
+  ! electronic iterations
+!NELM     = 200
+
+  ! spin-polarized?
+ISPIN    = ${ispin}
+
+${nbands_prefix}NBANDS   = $nbands
+
+ENCUT    = $encut
+!SIGMA    = 0.0001
+
+EOF

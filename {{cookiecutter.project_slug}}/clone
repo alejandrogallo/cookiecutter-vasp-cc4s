@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -eu
+
+files=(
+$(ls $(cat clone.files | sed "s/#.*//; /^\s*$/d"))
+)
+
+folder=$1
+
+[[ ! -d $folder ]] && mkdir -p $folder || {
+  echo $folder exists
+  exit 1
+}
+
+for f in ${files[@]}; do
+  dirnames=$(dirname $f)
+  mkdir -p ${folder}/${dirnames}
+  cp -v $f $folder/${dirnames}
+done

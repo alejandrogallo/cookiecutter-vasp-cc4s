@@ -1,0 +1,23 @@
+#! /usr/bin/env bash
+set -eu
+source run.conf
+name=$1
+
+test ! -f *.${name}.shin && {
+  echo "No shin template files"
+  exit 0
+}
+
+for shin in $(ls *.${name}.shin); do
+  echo $shin
+  filename=${shin%.${name}.shin}
+  output=${filename}.${name}
+
+  bash $shin > ${output}
+
+  echo "::: ${filename}.${shin} BEGIN"
+  cat ${output}
+  echo "::: ${filename}.${shin} END"
+
+  cp -v ${output} ${filename}
+done
