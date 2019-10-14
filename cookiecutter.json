@@ -3,7 +3,7 @@
   "email": "",
   "github_username": "",
   "project_name": "Calculation name",
-  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '-') }}",
   "project_short_description": "",
   "open_source_license": ["GNU General Public License v3"]
 }
