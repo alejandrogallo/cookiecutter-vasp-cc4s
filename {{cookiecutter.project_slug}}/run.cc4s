@@ -6,8 +6,17 @@ name=${0#.*run.}
 
 mkdir -p ${cc4sfolder}
 
+./setup-shin-files ${name}
+
+input_file="input.cc4s"
+
 # copy all cc4s input files into cc4sfolder
-cp -v input.cc4s ${cc4sfolder}/
+cp -v ${input_file} ${cc4sfolder}/
 
 # run cc4s calculation in cc4sfolder
-cd ${cc4sfolder} && ${CC4S} -file input.cc4s
+(
+  cd ${cc4sfolder} &&
+  ${CC4S} \
+    -file ${input_file} \
+    -logFile ${name}-`date | md5sum | awk '{print $1}'`.log
+)

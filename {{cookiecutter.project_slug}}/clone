@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 set -eu
 
+folder=$(readlink -f $1)
+cd `dirname $0`
+
 files=(
 $(ls $(cat clone.files | sed "s/#.*//; /^\s*$/d"))
 )
-
-folder=$1
 
 [[ ! -d $folder ]] && mkdir -p $folder || {
   echo $folder exists
