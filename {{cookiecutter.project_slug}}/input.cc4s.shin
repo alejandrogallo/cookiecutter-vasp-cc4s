@@ -1,0 +1,108 @@
+set -eu
+source run.conf
+
+cat <<EOF
+% vim:ft=cc4s
+CoulombVertexReader [
+  (file "`readlink -f FTODDUMP`")
+  (unrestricted 1)
+] [
+  CoulombVertex
+  HoleEigenEnergies ParticleEigenEnergies
+].
+
+CoulombIntegralsFromVertex [
+  CoulombVertex HoleEigenEnergies ParticleEigenEnergies
+  (antisymmetrize 1)
+] [
+
+  HHHHCoulombIntegrals
+  HHHPCoulombIntegrals
+  HHPHCoulombIntegrals
+  HHPPCoulombIntegrals
+  HPHHCoulombIntegrals
+  HPHPCoulombIntegrals
+  HPPHCoulombIntegrals
+  HPPPCoulombIntegrals
+  PHHHCoulombIntegrals
+  PHHPCoulombIntegrals
+  PHPHCoulombIntegrals
+  PHPPCoulombIntegrals
+  PPHHCoulombIntegrals
+  PPHPCoulombIntegrals
+  PPPHCoulombIntegrals
+  PPPPCoulombIntegrals
+  PHHPCoulombIntegrals
+].
+
+UccsdAmplitudesFromCoulombIntegrals [
+
+  HHHHCoulombIntegrals
+  HHHPCoulombIntegrals
+  HHPHCoulombIntegrals
+  HHPPCoulombIntegrals
+  HPHHCoulombIntegrals
+  HPHPCoulombIntegrals
+  HPPHCoulombIntegrals
+  HPPPCoulombIntegrals
+  PHPHCoulombIntegrals
+  PHPPCoulombIntegrals
+  PPHHCoulombIntegrals
+  PPHPCoulombIntegrals
+  PPPHCoulombIntegrals
+  PPPHCoulombIntegrals
+  PPPPCoulombIntegrals
+  PHHPCoulombIntegrals
+  HoleEigenEnergies ParticleEigenEnergies
+  (maxIterations 10)
+  (antisymmetrize 1)
+  (unrestricted 1)
+  %(mixer "LinearMixer")
+  (mixingRatio 1.0)
+] [
+  (UccsdEnergy UccsdEnergy)
+  (UccsdSinglesAmplitudes UccsdSinglesAmplitudes)
+  (UccsdDoublesAmplitudes UccsdDoublesAmplitudes)
+].
+
+TensorWriter [ (Data UccsdSinglesAmplitudes) ] [].
+TensorWriter [ (Data UccsdDoublesAmplitudes) ] [].
+
+CcsdEquationOfMotionDavidson [
+
+  HHHHCoulombIntegrals
+  HHHPCoulombIntegrals
+  HHPHCoulombIntegrals
+  HHPPCoulombIntegrals
+  HPHHCoulombIntegrals
+  HPHPCoulombIntegrals
+  HPPHCoulombIntegrals
+  HPPPCoulombIntegrals
+  PHHHCoulombIntegrals
+  PHHPCoulombIntegrals
+  PHPHCoulombIntegrals
+  PHPPCoulombIntegrals
+  PPHHCoulombIntegrals
+  PPHPCoulombIntegrals
+  PPPHCoulombIntegrals
+  PPPPCoulombIntegrals
+
+  HoleEigenEnergies ParticleEigenEnergies
+  (SinglesAmplitudes UccsdSinglesAmplitudes)
+  (DoublesAmplitudes UccsdDoublesAmplitudes)
+  (eigenstates 10)
+  %(maxIterations 2)
+  (intermediates 1)
+  (antisymmetrize 1)
+  %(CISD 0)
+  % perform spin flip?
+  (preconditionerSpinFlip 0)
+  (printTensors 1)
+  (printEigenvectorsRange "1-4")
+  (printEigenvectorsDoubles 1)
+
+] [
+  SinglesHamiltonianDiagonal
+  DoublesHamiltonianDiagonal
+].
+EOF
